@@ -1,0 +1,14 @@
+frontend/node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+frontend/.vercel/
+backend/venv/
+backend/__pycache__/
+**/__pycache__/
+**/*.pyc
+backend/.pytest_cache/
+.env
+frontend/.env.local
+backend/.env
+.DS_Store
+Thumbs.db

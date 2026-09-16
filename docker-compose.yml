@@ -1,0 +1,66 @@
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: happyhouse
+    ports:
+      # Host 3307 -> container 3306, so this doesn't collide with a
+      # MySQL you already have running locally on the default port.
+      - "3307:3306"
+    volumes:
+      - happyhouse_mysql_data:/var/lib/mysql
+      # Auto-run on first boot only (when the data volume is empty).
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_NAME: happyhouse
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      ENV: development
+      FRONTEND_ORIGIN: http://localhost:3001
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+        NEXT_PUBLIC_SITE_URL: http://localhost:3001
+    restart: unless-stopped
+    environment:
+      # Server-side code (Server Components, sitemap.ts) runs inside this
+      # container and must reach the backend via Docker's internal network
+      # name, not "localhost" (which would mean this container). This is
+      # runtime-only and separate from the NEXT_PUBLIC_* build args above,
+      # which are for the browser and must stay as "localhost:8000".
+      SERVER_API_URL: http://backend:8000
+    ports:
+      # Host 3001 -> container 3000. Not the default 3000 because another
+      # project on this machine (aegis-frontend) already holds that port.
+      - "3001:3000"
+    depends_on:
+      - backend
+
+volumes:
+  happyhouse_mysql_data:
