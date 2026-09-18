@@ -4,13 +4,14 @@
 -- =========================================================
 -- Run against MySQL 8.0+
 -- Character set: utf8mb4 (full unicode support, incl. ₹ and emoji)
+--
+-- Intentionally does NOT hardcode a database name via CREATE DATABASE/
+-- USE — different hosting setups name the database differently (local
+-- installs used "happyhouse", Railway's managed MySQL provisions one
+-- called "railway" by default). Specify the target database on the
+-- command line instead:
+--   mysql -h <host> -P <port> -u <user> -p <database_name> < schema.sql
 -- =========================================================
-
-CREATE DATABASE IF NOT EXISTS happyhouse
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE happyhouse;
 
 -- Force the connection charset explicitly. Without this, some MySQL
 -- client invocations (notably the one Docker's entrypoint uses to

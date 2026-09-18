@@ -19,25 +19,26 @@ const SORT_OPTIONS: { value: NonNullable<PropertySearchParams["sort"]>; label: s
 export default async function PropertiesPage({
   searchParams,
 }: {
-  searchParams: Record<string, string | undefined>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }) {
+  const resolvedSearchParams = await searchParams;
   const params: PropertySearchParams = {
-    listing_type: searchParams.listing_type as PropertySearchParams["listing_type"],
-    property_type: searchParams.property_type as PropertySearchParams["property_type"],
-    locality: searchParams.locality,
-    min_price: searchParams.min_price ? Number(searchParams.min_price) : undefined,
-    max_price: searchParams.max_price ? Number(searchParams.max_price) : undefined,
-    bedrooms: searchParams.bedrooms ? Number(searchParams.bedrooms) : undefined,
-    furnishing_status: searchParams.furnishing_status as PropertySearchParams["furnishing_status"],
-    parking: searchParams.parking,
-    sort: (searchParams.sort as PropertySearchParams["sort"]) || "newest",
-    page: searchParams.page ? Number(searchParams.page) : 1,
+    listing_type: resolvedSearchParams.listing_type as PropertySearchParams["listing_type"],
+    property_type: resolvedSearchParams.property_type as PropertySearchParams["property_type"],
+    locality: resolvedSearchParams.locality,
+    min_price: resolvedSearchParams.min_price ? Number(resolvedSearchParams.min_price) : undefined,
+    max_price: resolvedSearchParams.max_price ? Number(resolvedSearchParams.max_price) : undefined,
+    bedrooms: resolvedSearchParams.bedrooms ? Number(resolvedSearchParams.bedrooms) : undefined,
+    furnishing_status: resolvedSearchParams.furnishing_status as PropertySearchParams["furnishing_status"],
+    parking: resolvedSearchParams.parking,
+    sort: (resolvedSearchParams.sort as PropertySearchParams["sort"]) || "newest",
+    page: resolvedSearchParams.page ? Number(resolvedSearchParams.page) : 1,
   };
 
   const result = await api.properties.list(params);
 
   function pageHref(page: number) {
-    const usp = new URLSearchParams(searchParams as Record<string, string>);
+    const usp = new URLSearchParams(resolvedSearchParams as Record<string, string>);
     usp.set("page", String(page));
     return `/properties?${usp.toString()}`;
   }
@@ -51,7 +52,7 @@ export default async function PropertiesPage({
         </div>
 
         <form className="flex items-center gap-2" action="/properties">
-          {Object.entries(searchParams)
+          {Object.entries(resolvedSearchParams)
             .filter(([key]) => key !== "sort")
             .map(([key, value]) =>
               value ? <input key={key} type="hidden" name={key} value={value} /> : null

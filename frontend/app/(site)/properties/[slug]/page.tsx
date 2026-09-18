@@ -9,9 +9,10 @@ import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   try {
-    const property = await api.properties.bySlug(params.slug);
+    const { slug } = await params;
+    const property = await api.properties.bySlug(slug);
     const description = property.description?.slice(0, 155) || `${property.property_type} in ${property.locality}, Thane`;
     const image = property.images[0]?.image_url;
     return {
@@ -35,9 +36,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function PropertyDetailPage({ params }: { params: { slug: string } }) {
+export default async function PropertyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const [property, settings] = await Promise.all([
-    api.properties.bySlug(params.slug).catch(() => null),
+    api.properties.bySlug(slug).catch(() => null),
     api.settings.get(),
   ]);
 

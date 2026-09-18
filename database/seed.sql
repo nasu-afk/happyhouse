@@ -6,9 +6,11 @@
 --
 -- >>> REMOVE THIS DATA BEFORE PRODUCTION (spec §42) <<<
 --    DELETE FROM properties WHERE title LIKE '[DEMO]%';
+--
+-- Doesn't hardcode a database name — see schema.sql's header for why.
+-- Specify the target database on the command line instead:
+--   mysql -h <host> -P <port> -u <user> -p <database_name> < seed.sql
 -- =========================================================
-
-USE happyhouse;
 
 -- See schema.sql for why this line matters — without it, ₹ and other
 -- multi-byte characters get corrupted on import (mojibake), even though
