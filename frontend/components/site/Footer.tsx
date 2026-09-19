@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { SiteSettings, Area } from "@/lib/types";
 
 export function Footer({ settings, areas }: { settings: SiteSettings; areas: Area[] }) {
@@ -8,7 +9,7 @@ export function Footer({ settings, areas }: { settings: SiteSettings; areas: Are
     <footer className="bg-night text-cream mt-24">
       <div className="px-6 lg:px-16 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
-          <h2 className="font-display text-xl mb-2">{settings.business_name}</h2>
+          <Image src="/logo.png" alt={settings.business_name} width={48} height={48} className="h-12 w-auto mb-3" />
           {settings.tagline && <p className="text-cream/70 text-sm">{settings.tagline}</p>}
         </div>
 

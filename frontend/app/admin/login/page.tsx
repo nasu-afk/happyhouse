@@ -29,7 +29,7 @@ export default function AdminLoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-night px-6">
       <form onSubmit={handleSubmit} className="w-full max-w-sm bg-paper border border-line rounded-card p-8">
-        <Image src="/logo.png" alt="HappyHouse" width={140} height={91} className="h-16 w-auto mx-auto mb-4" priority />
+        <Image src="/logo.png" alt="HappyHouse" width={80} height={80} className="h-20 w-auto mx-auto mb-4" priority />
         <h1 className="font-display text-xl text-ink text-center mb-1">Admin</h1>
         <p className="text-stone text-sm text-center mb-6">Sign in to manage properties and enquiries.</p>
 

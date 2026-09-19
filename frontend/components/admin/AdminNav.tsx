@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
@@ -25,7 +26,7 @@ export function AdminNav() {
   return (
     <header className="bg-night text-cream px-6 lg:px-10 py-4 flex items-center justify-between">
       <nav className="flex gap-7 items-center">
-        <span className="font-display text-lg mr-2">HappyHouse</span>
+        <Image src="/logo.png" alt="HappyHouse" width={40} height={40} className="h-10 w-auto mr-3" />
         {LINKS.map((link) => (
           <Link
             key={link.href}

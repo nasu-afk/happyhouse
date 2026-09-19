@@ -19,6 +19,12 @@ const plexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
+  // Relative image paths (openGraph/twitter images below, and any page's
+  // generateMetadata) resolve against this. Without it, Next.js silently
+  // falls back to its own internal dev address (e.g. localhost:8080 on
+  // Railway) — meaning link previews shared on WhatsApp/social would try
+  // to load an image from an address only reachable inside the container.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://happyhouse.example.com"),
   title: {
     default: "HappyHouse | Property Consultancy in Thane",
     template: "%s | HappyHouse",
@@ -27,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "HappyHouse",
     type: "website",
-    images: [{ url: "/logo.png", width: 1090, height: 713, alt: "HappyHouse" }],
+    images: [{ url: "/logo.png", width: 1080, height: 1080, alt: "HappyHouse" }],
   },
   twitter: {
     card: "summary_large_image",

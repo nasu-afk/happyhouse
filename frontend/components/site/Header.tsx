@@ -28,7 +28,7 @@ export function Header({ settings }: { settings: SiteSettings }) {
     <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur border-b border-line">
       <div className="px-6 lg:px-16 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center" onClick={() => setMenuOpen(false)}>
-          <Image src="/logo.png" alt={settings.business_name} width={160} height={104} className="h-11 w-auto" priority />
+          <Image src="/logo.png" alt={settings.business_name} width={56} height={56} className="h-14 w-auto" priority />
         </Link>
 
         <nav className="hidden md:flex items-center gap-7">

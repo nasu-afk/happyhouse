@@ -25,10 +25,10 @@ const config: Config = {
         clay: "rgb(var(--color-clay) / <alpha-value>)",
         // Fixed (never themed) — for sections deliberately always-dark
         // regardless of light/dark mode: the hero, footer, admin nav,
-        // lightbox backdrop. "night" is the exact logo navy; "cream" is
+        // lightbox backdrop. "night" is the exact logo teal-black; "cream" is
         // the light neutral used for content that must stay legible on
         // "night".
-        night: "#0B1D34",
+        night: "#0A1417",
         cream: "#F6F4EE",
       },
       fontFamily: {

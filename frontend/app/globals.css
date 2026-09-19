@@ -5,28 +5,29 @@
 @layer base {
   :root {
     /* Light theme (default) — RGB triplets for Tailwind's <alpha-value> pattern.
-       Navy/gold sampled directly from the HappyHouse logo. */
+       Sampled directly from the HappyHouse emblem logo (teal-black disc,
+       gold text/ring, copper roof accent). */
     --color-paper: 246 244 238;
-    --color-ink: 11 29 52;
-    --color-stone: 98 103 115;
-    --color-line: 221 224 227;
-    --color-lake: 239 166 8;
-    --color-lake-light: 245 189 66;
-    --color-lake-dark: 196 130 4;
-    --color-clay: 181 122 26;
+    --color-ink: 10 20 23;
+    --color-stone: 95 105 106;
+    --color-line: 218 224 222;
+    --color-lake: 213 150 81;
+    --color-lake-light: 227 181 130;
+    --color-lake-dark: 168 112 52;
+    --color-clay: 193 120 79;
   }
 
   html.dark {
-    /* Dark theme — same navy/gold family, gold brightened for contrast
+    /* Dark theme — same teal/gold/copper family, brightened for contrast
        on a dark background. */
-    --color-paper: 10 16 26;
-    --color-ink: 228 230 235;
-    --color-stone: 150 153 163;
-    --color-line: 35 42 54;
-    --color-lake: 245 182 51;
-    --color-lake-light: 248 199 92;
-    --color-lake-dark: 250 210 120;
-    --color-clay: 210 160 90;
+    --color-paper: 8 14 16;
+    --color-ink: 230 224 212;
+    --color-stone: 150 150 140;
+    --color-line: 32 42 44;
+    --color-lake: 227 181 130;
+    --color-lake-light: 235 200 160;
+    --color-lake-dark: 240 214 178;
+    --color-clay: 214 148 108;
   }
 
   html {
