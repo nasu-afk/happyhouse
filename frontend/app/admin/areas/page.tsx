@@ -61,7 +61,8 @@ export default function AdminAreasPage() {
   return (
     <div>
       <AdminNav />
-      <div className="px-6 lg:px-10 py-8 max-w-3xl">
+      <div className="px-6 lg:px-10 py-8 max-w-6xl">
+        <div className="max-w-2xl">
         <h1 className="font-display text-3xl text-ink mb-2">Areas we serve</h1>
         <p className="text-stone mb-8">
           Add a photo for each locality — these show on the public &ldquo;Areas&rdquo; page.
@@ -83,17 +84,18 @@ export default function AdminAreasPage() {
             {creating ? "Adding…" : "Add area"}
           </button>
         </form>
+        </div>
 
         {loading ? (
-          <div className="space-y-4">
-            {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-32 w-full" />)}
+          <div className="grid lg:grid-cols-2 gap-6">
+            {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-32 w-full" />)}
           </div>
         ) : areas.length === 0 ? (
           <p className="text-stone text-sm">No areas yet — add your first one above.</p>
         ) : (
-          <div className="space-y-6">
+          <div className="grid lg:grid-cols-2 gap-6">
             {areas.map((area) => (
-              <div key={area.id} className="border border-line rounded-card p-5 grid sm:grid-cols-[200px_1fr] gap-5">
+              <div key={area.id} className="border border-line rounded-card p-5 grid sm:grid-cols-[160px_1fr] gap-5">
                 <SingleImageUpload
                   imageUrl={area.image_url}
                   onChange={(url) => handleUpdate(area, { image_url: url })}

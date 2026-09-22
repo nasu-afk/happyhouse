@@ -35,9 +35,12 @@ export default function AdminSettingsPage() {
   if (loading) return (
     <div>
       <AdminNav />
-      <div className="px-6 lg:px-10 py-8 max-w-2xl space-y-4">
+      <div className="px-6 lg:px-10 py-8 max-w-6xl space-y-4">
         <Skeleton className="h-9 w-40 mb-4" />
-        {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-11 w-full" />)}
+        <div className="grid lg:grid-cols-2 gap-16">
+          <div className="space-y-4">{Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-11 w-full" />)}</div>
+          <div className="space-y-4">{Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-11 w-full" />)}</div>
+        </div>
       </div>
     </div>
   );
@@ -45,15 +48,20 @@ export default function AdminSettingsPage() {
   return (
     <div>
       <AdminNav />
-      <div className="px-6 lg:px-10 py-8 max-w-2xl">
+      <div className="px-6 lg:px-10 py-8 max-w-6xl">
         <h1 className="font-display text-3xl text-ink mb-8">Settings</h1>
+        <div className="grid lg:grid-cols-2 gap-16">
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block"><span className={labelClass}>Business name</span><input value={form.business_name ?? ""} onChange={(e) => update("business_name", e.target.value)} className={inputClass} /></label>
           <label className="block"><span className={labelClass}>Tagline</span><input value={form.tagline ?? ""} onChange={(e) => update("tagline", e.target.value)} className={inputClass} /></label>
-          <label className="block"><span className={labelClass}>Consultant name</span><input value={form.consultant_name ?? ""} onChange={(e) => update("consultant_name", e.target.value)} className={inputClass} /></label>
-          <label className="block"><span className={labelClass}>Phone</span><input value={form.phone ?? ""} onChange={(e) => update("phone", e.target.value)} className={inputClass} /></label>
-          <label className="block"><span className={labelClass}>WhatsApp number</span><input value={form.whatsapp ?? ""} onChange={(e) => update("whatsapp", e.target.value)} className={inputClass} /></label>
-          <label className="block"><span className={labelClass}>Email</span><input type="email" value={form.email ?? ""} onChange={(e) => update("email", e.target.value)} className={inputClass} /></label>
+          <div className="grid grid-cols-2 gap-4">
+            <label className="block"><span className={labelClass}>Consultant name</span><input value={form.consultant_name ?? ""} onChange={(e) => update("consultant_name", e.target.value)} className={inputClass} /></label>
+            <label className="block"><span className={labelClass}>Phone</span><input value={form.phone ?? ""} onChange={(e) => update("phone", e.target.value)} className={inputClass} /></label>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <label className="block"><span className={labelClass}>WhatsApp number</span><input value={form.whatsapp ?? ""} onChange={(e) => update("whatsapp", e.target.value)} className={inputClass} /></label>
+            <label className="block"><span className={labelClass}>Email</span><input type="email" value={form.email ?? ""} onChange={(e) => update("email", e.target.value)} className={inputClass} /></label>
+          </div>
           <label className="block"><span className={labelClass}>Address</span><input value={form.address ?? ""} onChange={(e) => update("address", e.target.value)} className={inputClass} /></label>
           <label className="block"><span className={labelClass}>About text</span><textarea rows={5} value={form.about_text ?? ""} onChange={(e) => update("about_text", e.target.value)} className={inputClass} /></label>
 
@@ -66,7 +74,10 @@ export default function AdminSettingsPage() {
           {saved && <span className="ml-3 text-sm text-lake-dark">Saved.</span>}
         </form>
 
-        <ChangePasswordSection />
+        <div className="lg:border-l lg:border-line lg:pl-16">
+          <ChangePasswordSection />
+        </div>
+        </div>
       </div>
     </div>
   );

@@ -46,9 +46,9 @@ export default function AdminDashboard() {
   return (
     <div>
       <AdminNav />
-      <div className="px-6 lg:px-10 py-10 max-w-3xl">
+      <div className="px-6 lg:px-10 py-10 max-w-6xl">
         {loading ? (
-          <div>
+          <div className="max-w-xl">
             <Skeleton className="h-9 w-64 mb-2" />
             <Skeleton className="h-5 w-48 mb-8" />
             <Skeleton className="h-20 w-full mb-8" />
@@ -56,7 +56,8 @@ export default function AdminDashboard() {
             <Skeleton className="h-4 w-72" />
           </div>
         ) : (
-          <>
+          <div className="grid lg:grid-cols-[1fr_320px] gap-12">
+            <div className="max-w-xl">
             <div className="flex items-start justify-between mb-10">
               <div>
                 <h1 className="font-display text-3xl text-ink">{greeting}.</h1>
@@ -120,7 +121,52 @@ export default function AdminDashboard() {
                 </>
               )}
             </div>
-          </>
+            </div>
+
+            {/* Right column — quick actions + recent activity, real data only */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-sm text-stone mb-3">Quick actions</h2>
+                <div className="space-y-2">
+                  {[
+                    { href: "/admin/properties/new", label: "Add a property" },
+                    { href: "/admin/areas", label: "Manage areas" },
+                    { href: "/admin/enquiries", label: "View enquiries" },
+                    { href: "/admin/settings", label: "Edit business settings" },
+                  ].map((action) => (
+                    <Link
+                      key={action.href}
+                      href={action.href}
+                      className="block border border-line rounded-card px-4 py-3 text-sm hover:border-lake transition-colors"
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {properties.length > 0 && (
+                <div>
+                  <h2 className="text-sm text-stone mb-3">Recently updated</h2>
+                  <div className="space-y-2">
+                    {[...properties]
+                      .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+                      .slice(0, 4)
+                      .map((p) => (
+                        <Link
+                          key={p.id}
+                          href={`/admin/properties/${p.id}/edit`}
+                          className="block border border-line rounded-card px-4 py-3 hover:border-lake transition-colors"
+                        >
+                          <p className="text-sm text-ink truncate">{p.title}</p>
+                          <p className="text-xs text-stone capitalize">{p.status} · {p.published ? "published" : "draft"}</p>
+                        </Link>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>
